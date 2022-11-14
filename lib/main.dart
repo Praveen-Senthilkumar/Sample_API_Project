@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'network/endpoint.dart';
+import 'package:sample_project_1/feature/splash_screen.dart';
+import 'package:sample_project_1/home/home_page.dart';
+
 
 
 
@@ -19,64 +21,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Random Fact'),
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+      //const MyHomePage(title: 'Random Fact'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  String name = '';
-
-  void initState() {
-    super.initState();
-    InitFact();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(name),
-                  SizedBox( height: 20,),
-                  ElevatedButton(onPressed: () {
-                    InitFact();
-                  },
-                      child: const Text('Click Me'))
-                ],
-              ),
-            ),
-          ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-
-  Future<void> InitFact() async {
-    final result = await HOSAPI().GetUserData();
-
-    if (result.isNotEmpty) {
-      setState(() {
-        name = result['fact'];
-      });
-
-    }
-  }
-}
